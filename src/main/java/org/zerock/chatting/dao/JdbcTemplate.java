@@ -25,13 +25,14 @@ abstract class JdbcTemplate {
 
 
     //템플릿 생성 연결후 기능 -> finally에서 close()
-    public void makeAll() {
+    public void makeAll() throws RuntimeException {
         try {
             makeConnection();
             execute();
-            log.info("END!!!!");
+            log.info("END");
         } catch(Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         } finally {
             finish(); //닫는 코드, 보통 닫는 것은 finally에 있어야함.
         }
@@ -40,14 +41,14 @@ abstract class JdbcTemplate {
     protected abstract void execute() throws Exception;
 
     private void makeConnection() throws Exception{
-        log.info("CONNECTION......");
-        this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/praticedb","myuser","myuser");
+        log.info("Connection......");
+        this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bit08db","bituser","bituser");
     }
 
     private void finish() {
         log.info("------------finish--------------");
         log.info("Template ResultSet: "+ resultSet);
-        log.info("Template PreparedStatement: "+ preparedStatement);
+        log.info("Template PreparedStatement: "+preparedStatement);
         log.info(connection);
 
         if (resultSet != null) {
