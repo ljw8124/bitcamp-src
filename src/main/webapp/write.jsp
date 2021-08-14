@@ -7,9 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Object obj = session.getAttribute("name");
-    if (obj == null) {
-        response.sendRedirect("/login.jsp");
+    Object obj = session.getAttribute("mid"); // 리턴타입이 Object
+    //fakeLogin에서 셋팅한 session을 가져옴.
+    if (obj == null) { //만약 로그인 하지 않았다면,,
+        response.sendRedirect("/login?result=fail");
+        //다시 로그인페이지로 redirect
         return;
     }
 %>
@@ -20,6 +22,9 @@
 </head>
 <body>
   <h1>write page</h1>
+    <form action="logout.jsp">
+        <button type="submit">LOGOUT</button>
+    </form>
 
 </body>
 </html>

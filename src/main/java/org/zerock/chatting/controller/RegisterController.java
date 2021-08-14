@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "RegisterController", value = "/msg/register")
@@ -19,6 +20,14 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("등록 화면 조회");
+
+        HttpSession session = request.getSession();
+        Object memberObj = session.getAttribute("member");
+        if (memberObj == null) {
+            log.info("잘못된 접근입니다.");
+            response.sendRedirect("/login");
+            return; //return이 중요함!
+        }
         request.getRequestDispatcher("/WEB-INF/msg/register.jsp")
                 .forward(request, response);
     }
@@ -28,8 +37,7 @@ public class RegisterController extends HttpServlet {
 
         //request에서 받는 파라미터 한글처리하는 코드
         request.setCharacterEncoding("UTF-8");
-        //who,whom,content
-        //파라미터 수집 -> MsgDTO를 생성
+
         String who = request.getParameter("who");
         String whom = request.getParameter("whom");
         String content = request.getParameter("content");

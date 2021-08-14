@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    session.setAttribute("name","홍길동");
+    session.setAttribute("mid","홍길동");
+    //session에 "mid"의 키로 "홍길동"을 저장
 %>
 
 <html>

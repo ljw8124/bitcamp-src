@@ -21,13 +21,13 @@ public class MsgDAOTests {
             String content = "sample" + i;
 
             MsgDTO dto = MsgDTO.builder().who(who).whom(whom).content(content).build();
-            MsgDAO.INSTANCE.msgInsert(dto);
+            MsgDAO.INSTANCE.insert(dto);
         });
     }
 
     @Test
     public void testMsgSelect() {
-        Map<String, List<MsgDTO>> result = MsgDAO.INSTANCE.msgSelectList("user3");
+        Map<String, List<MsgDTO>> result = MsgDAO.INSTANCE.selectList("user3");
 
         log.info("보낸목록.............");
         List<MsgDTO> receiveList = result.get("R");
