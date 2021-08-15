@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ljw81
-  Date: 2021-08-12
-  Time: 오후 12:21
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <!-- jsp에 jstl 연결하기 위해서 추가 -->
 

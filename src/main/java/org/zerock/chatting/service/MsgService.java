@@ -41,11 +41,11 @@ public enum MsgService {
         return MsgDAO.INSTANCE.read(mno);
     }
 
-    public void remove(MsgDTO msgDTO) throws RuntimeException {
+    public void remove(long mno, String who) throws RuntimeException {
 
         log.info("remove......");
 
-        MsgDAO.INSTANCE.remove(msgDTO.getMno(),msgDTO.getWho());
+        MsgDAO.INSTANCE.remove(mno,who);
 
     }
 }

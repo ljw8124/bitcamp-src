@@ -18,6 +18,7 @@ import java.io.IOException;
 public class RemoveController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         HttpSession session = request.getSession();
         Object memberObj = session.getAttribute("member");
         if (memberObj == null) {
@@ -30,18 +31,14 @@ public class RemoveController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
         long mno = Long.parseLong(request.getParameter("mno"));
         String who = request.getParameter("who");
 
         log.info("mno : " + mno);
         log.info("who : " + who);
 
-        MsgDTO msgDTO = MsgDTO.builder()
-                .mno(mno).who(who).build();
 
-        MsgService.INSTANCE.remove(msgDTO);
+        MsgService.INSTANCE.remove(mno, who);
         response.sendRedirect("/msg/list?whom=" + who);
     }
 }
