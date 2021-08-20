@@ -10,7 +10,7 @@ import java.io.InputStream;
 public enum MyBatisLoader { //enum은 lombok 사용에 제한이 많음
     INSTANCE;
 
-    private SqlSessionFactory sqlSessionFactory;
+    private SqlSessionFactory sqlSessionFactory; //mySql서버와 myBatis를 연결해줌
 
     MyBatisLoader() {
         try {

@@ -71,6 +71,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.mybatis/mybatis
     implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.7' //mybatis 연결
 
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.14' //thumbnail 생성 라이브러리
+
+
 }
 
 test {

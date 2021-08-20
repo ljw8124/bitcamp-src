@@ -52,7 +52,7 @@ public class modifyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Integer bno = getInt(request.getParameter("bno"));
+        Integer bno = getInt(request.getParameter("bno")); //bno도 가져와야 업데이트가능!
         String modifyTitle = request.getParameter("title");
         String modifyContent = request.getParameter("content");
 
