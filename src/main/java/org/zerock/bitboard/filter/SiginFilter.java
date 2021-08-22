@@ -14,11 +14,11 @@ import java.io.IOException;
 public class SiginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
+        Filter.super.init(filterConfig); //init() 메서드는 처음 딱 한번만 호출
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException { //URL 들어올때마다 doFilter() 호출
         log.info("Signin Filter..........run................");
 //
 //        HttpServletRequest req = (HttpServletRequest) request; //다운캐스팅필요
@@ -31,7 +31,7 @@ public class SiginFilter implements Filter {
 //            res.sendRedirect("/login");
 //            return;
 //        }
-        chain.doFilter(request,response);
+        chain.doFilter(request,response); //chain으로 연결하는 메서드
 
     }
 
