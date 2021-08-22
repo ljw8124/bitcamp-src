@@ -32,7 +32,7 @@ public class UploadController extends HttpServlet {
 
         Collection<Part> parts = request.getParts();
 
-        parts.forEach(part -> {
+        parts.forEach(part -> { //form에서 받은 multiple file을 part 콜렉션을 이용하여 DB로 보내기위한 밑작업
             log.info(part);
 
             String type = part.getContentType();
@@ -49,16 +49,16 @@ public class UploadController extends HttpServlet {
 
             log.info(fileName);
 
-            //try.catch에 넣는 이유는 inputStream이 열렸다가 자동으로 닫히기를 원해서이다
+            //try.catch에 넣는 이유는 inputStream이 열렸다가 자동으로 닫히기fdf를 원해서이다
             //원본 파일 저장
             try (InputStream in = part.getInputStream();
                  OutputStream fos = new FileOutputStream(uploadFolder + File.separator + uploadFileName);
                  //실시간을 주기때문에 파일 명이 같아도 겹치지 않고 따로 생성됨
             ) {
                 while(true) {
-                    int count = in.read(buffer);
+                    int count = in.read(buffer); //read는 1바이트씩 읽어서 리턴하는 메서드
                     if (count == -1) { break; }
-                    fos.write(buffer,0,count);
+                    fos.write(buffer,0,count); //0부터 count까지 작성
                 }
 
             } catch (Exception e) {
