@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <ul>
+    <li>
+      <input type="checkbox" name="box">AAA
+    </li>
+    <li>
+      <input type="checkbox" name="box">BBB
+    </li>
+    <li>
+      <input type="checkbox" name="box">CCC
+    </li>
+    <li>
+      <input type="checkbox" name="box">DDD
+    </li>
+    <li>
+      <input type="checkbox" name="box">EEE
+    </li>
+  </ul>
+
+  <div id="target">
+
+  </div>
+
+<script> //dom handling
+
+  var arr = document.querySelectorAll("input")
+
+  console.log(arr)
+
+  for(var i = 0; i < arr.length; i++) {
+    arr[i].checked = true //자바스크립트는 접근제한자가 없음(ex. private)
+  }
+
+  var target = document.querySelector("#target")
+
+  target.innerHTML = "<button>AAAA</button>"
+
+</script>
+
+</body>
+</html>

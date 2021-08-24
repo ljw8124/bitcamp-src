@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style> /* css영역 */
+.bg {
+    background-color: lightblue;
+}
+
+.bgred {
+    background-color: red;
+    height: 50vh;
+}
+</style>
+<body>
+
+<button id="btn">CLICK</button>
+
+<div id="target" class="bg">
+    <h1>HELLO</h1>
+</div>
+
+<script>
+    //document 객체는 웹 페이지 그 자체를 의미함
+    var btn = document.querySelector("#btn") //id는 #을 이용하여 찾음
+    var target = document.querySelector("#target")
+
+    //이 함수가 callback 함수이고 callback 함수는 하나의 파라미터만 받을 수도 있다
+    btn.addEventListener("click", function (e) {
+        console.log("btn click");
+        console.log(e);
+        target.setAttribute("class", "bgred");
+    }, false)
+</script>
+
+</body>
+</html>

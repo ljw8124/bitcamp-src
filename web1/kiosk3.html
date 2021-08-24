@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+</style>
+<body>
+<h1>미도인</h1>
+<div>
+    <ul class="items">
+        <li><span><img src="https://modo-phinf.pstatic.net/20210308_253/1615190489021sS5bp_JPEG/mosaaOdNvL.jpeg?type=f540_540"></span>
+            <span class="menu">질긴스테이크덮밥 (하루한정 3000개)</span>
+            <span class="price">/ 93,200원</span>
+        </li>
+
+        <li><span><img src="https://modo-phinf.pstatic.net/20210308_103/16151904898273qgLv_JPEG/mosawFAygL.jpeg?type=f540_540"></span>
+            <span class="menu">냄새나는 대창스테이크덮밥 계절메뉴</span>
+            <span class="price">/ 120,200원</span>
+        </li>
+
+        <li><span><img src="https://modo-phinf.pstatic.net/20210308_257/1615191225232nIRN3_JPEG/mosaG1lEs4.jpeg?type=w1100"></span>
+            <span class="menu">안매운 제육 덮밥</span>
+            <span class="price">/ 3,200원</span>
+        </li>
+
+        <li><span><img src="https://modo-phinf.pstatic.net/20210308_94/16151932938945OxMP_JPEG/mosa35z4eH.jpeg?type=w1100"></span>
+            <span class="menu">참깨라면 맛 탄탄멘</span>
+            <span class="price">/ 230원</span>
+        </li>
+
+        <li><span><img src="https://modo-phinf.pstatic.net/20210308_217/16151932945571wTX8_JPEG/mosaAetzaC.jpeg?type=w1100"></span>
+            <span class="menu">곱창난 곱창라멘</span>
+            <span class="price">/ *무료나눔*</span>
+        </li>
+
+    </ul>
+</div>
+
+<div>
+    <ul class="cart">
+
+    </ul>
+</div>
+
+<script>
+    var cart = document.querySelector(".items")
+
+    document.querySelector(".items").addEventListener("click", function (e) {
+
+        console.log(e.target)
+
+        cart.innerHTML += "<li>" + e.target.innerHTML + "<button>x</button></li>";
+    }, false)
+    cart.addEventListener("click", function (e) {
+
+        console.log(e.target)
+
+        //만일 e.target이 버튼이었다면
+        if (e.target.matches('button')) {
+            //버튼을 가지고 있는  <li>태그를 찾고
+            var targetLi = e.target.parentElement
+            console.log(targetLi)
+            //해당 <li>를 삭제
+            cart.removeChild(targetLi)
+        }
+
+    }, false)
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

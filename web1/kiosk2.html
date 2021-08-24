@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+  <ul class="items">
+    <li><div>빅맥</div></li>
+    <li><div>상하이버거</div></li>
+    <li><div>불고기버거</div></li>
+    <li><div>치즈버거</div></li>
+    <li><div>후렌치후라이</div></li>
+  </ul>
+</div>
+
+<div>
+  <ul class="cart">
+
+  </ul>
+</div>
+
+<script>
+  var cart = document.querySelector(".cart")
+
+  document.querySelector(".items").addEventListener("click", function (e) {
+
+    console.log(e.target)
+
+    cart.innerHTML += "<li>" + e.target.innerHTML + "<button>x</button></li>";
+  }, false)
+    cart.addEventListener("click", function (e) {
+
+      console.log(e.target)
+
+      //만일 e.target이 버튼이었다면
+      if (e.target.matches('button')) {
+        //버튼을 가지고 있는  <li>태그를 찾고
+        var targetLi = e.target.parentElement
+        console.log(targetLi)
+        //해당 <li>를 삭제
+        cart.removeChild(targetLi)
+      }
+
+    }, false)
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
