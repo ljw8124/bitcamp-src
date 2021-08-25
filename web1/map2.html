@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Kakao 지도 시작하기</title>
+</head>
+
+<style>
+  .list {
+    list-style: none;
+  }
+</style>
+
+<body>
+<style>
+  .map {
+    width: 100vw;
+    height: 50vh;
+  }
+</style>
+<div id="map" class="map"></div>
+
+<div class="container">
+  <ul class="list">
+
+  </ul>
+</div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a77e0899fed2d5da22f64153c6a7bb35"></script>
+<script>
+  const container = document.getElementById('map');
+  const options = { //키,값으로 구성
+    center: new kakao.maps.LatLng(37.570418, 126.985143), //현재위치 설정
+    level: 5 //지도 범위 설정
+  };
+
+  const map = new kakao.maps.Map(container, options);
+</script>
+
+<script>
+
+  const stores = [ //model
+    {sno: 1, name: '장독대', lat: 37.5693297, lng: 126.9863226, menus: '육전'},
+    {sno: 2, name: '우육면관', lat: 37.5685408, lng: 126.9852011, menus: '우육면'},
+    {sno: 3, name: '깡장집', lat: 37.5684433, lng: 126.973642, menus: '강된장'},
+  ]
+  //viewModel은 marker
+
+  const listUL = document.querySelector(".list")
+
+  function makeList(arr) {
+    let str = "";
+
+    for (let i = 0; i < arr.length; i++) {
+      const {sno, name, lat, lng, menus} = arr[i]
+
+      str += `<li data-sno="${sno}" onclick="panTo(${lat}, ${lng}, '${name}', '${menus}', ${sno})">${sno} ${name} ${menus}</li>`
+    }
+      listUL.innerHTML = str
+  }
+
+  makeList(stores)
+
+  let infowindow = null
+
+  function panTo(lat, lng, name, menus, sno) {
+
+    if(infowindow) {
+      infowindow.close()
+    }
+
+    var moveLatLon = new kakao.maps.LatLng(lat, lng);
+
+    var iwContent = `<div style="padding:5px;">${name}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            iwPosition = moveLatLon, //인포윈도우 표시 위치입니다
+            iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성하고 지도에 표시합니다
+    infowindow = new kakao.maps.InfoWindow({ //키값의 형식으로 저장
+      map : map, // 인포윈도우가 표시될 지도
+      position : iwPosition,
+      content : iwContent,
+      removable : iwRemoveable
+    });
+
+    map.panTo(moveLatLon);
+    //panTo는 부드럽게 이동하는 메서드
+
+  }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Kakao 지도 시작하기</title>
+</head>
+
+<style>
+  .list {
+    list-style: none;
+  }
+</style>
+
+<body>
+
+<style>
+
+  .map {
+    width: 100vw;
+    height: 50vh;
+  }
+  .category {
+    display: flex;
+  }
+  .category div {
+    margin: 2em;
+    color: white;
+    background-color: green;
+    border: 1px blue;
+  }
+
+</style>
+
+<div id="map" class="map"></div>
+
+<div class="container">
+  <div class="category">
+    <div><a href="" onclick="setCategory(event, 'ALL')">전체</a></div> <!-- 줄그어진 이유는 되도록이면 사용하지 말라는 의미 -->
+    <div><a href="" onclick="setCategory(event, '한식')">한식</a></div>
+    <div><a href="" onclick="setCategory(event, '일식')">일식</a></div>
+    <div><a href="" onclick="setCategory(event, '중식')">중식</a></div>
+    <div><a href="" onclick="setCategory(event, '분식')">분식</a></div>
+  </div>
+  <ul class="list">
+
+  </ul>
+</div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a77e0899fed2d5da22f64153c6a7bb35"></script>
+<script>
+  const container = document.getElementById('map');
+  const options = { //키,값으로 구성
+    center: new kakao.maps.LatLng(37.577956, 126.976887),
+    level: 5
+  };
+
+  const map = new kakao.maps.Map(container, options);
+</script>
+
+<script>
+
+  const stores = [ //model
+    {sno: 1, name: '장독대', lat: 37.5693297, lng: 126.9863226, menus: '육전', cat: '한식'},
+    {sno: 2, name: '우육면관', lat: 37.5685408, lng: 126.9852011, menus: '우육면', cat: '중식'},
+    {sno: 3, name: '깡장집', lat: 37.5684433, lng: 126.973642, menus: '강된장', cat: '한식'},
+    {sno: 4, name: '창화당', lat: 37.57304, lng: 126.98980, menus: '떡볶이', cat: '분식'},
+    {sno: 5, name: "안래홍", lat: 37.5716732 , lng: 126.9804191 , menus:"짜장면", cat: '중식'},
+    {sno: 6, name: '크레이지후라이', lat: 37.5705859, lng: 126.9812478, menus: '떡볶이', cat: '분식'},
+    {sno: 7, name: '종로돈부리', lat: 37.5688615, lng: 126.9872637, menus: '연어덮밥', cat: '일식'},
+  ]
+  //viewModel은 marker
+
+  const listUL = document.querySelector(".list")
+
+  function makeList(arr) {
+    let str = "";
+
+    for (let i = 0; i < arr.length; i++) {
+      const {sno, name, lat, lng, menus} = arr[i]
+
+      str += `<li data-sno="${sno}" onclick="panTo(${lat}, ${lng}, '${name}', '${menus}', ${sno})">${sno} ${name} ${menus}</li>` //문자열은 ''을 넣어야함
+    }
+    listUL.innerHTML = str
+  }
+
+  makeList(stores)
+
+  let infowindow = null
+
+  function panTo(lat, lng, name, menus, sno) {
+
+    if(infowindow) {
+      infowindow.close()
+    }
+
+    var moveLatLon = new kakao.maps.LatLng(lat, lng);
+
+    var iwContent = `<div style="padding:5px;">${name}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            iwPosition = moveLatLon, //인포윈도우 표시 위치입니다
+            iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성하고 지도에 표시합니다
+    infowindow = new kakao.maps.InfoWindow({
+      map: map, // 인포윈도우가 표시될 지도
+      position : iwPosition,
+      content : iwContent,
+      removable : iwRemoveable
+    });
+
+    map.panTo(moveLatLon);
+
+  }
+
+</script>
+
+<script>
+  function getLocation() {
+    if (navigator.geolocation) {
+      //비동기 함수
+      //위치값을 가져왔다면 showPosition을 실행시켜라
+      navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  }
+
+  function showPosition(position) {
+    const lat = position.coords.latitude; //지금 나의 위치에서 latitude 값
+    const lng = position.coords.longitude; //지금 나의 위치에서 longitude 값
+
+    alert("현재 위치로 이동합니다.")
+
+    //자바스크립트 대표적 내장 비동기 함수
+    setTimeout(function (){ //setTimeout 은 두번째 인자만큼 기다린 후 첫번째 인자로 들어온 콜백 함수를 실행
+      const center = new kakao.maps.LatLng(lat, lng);
+      map.panTo(center)
+    }, 1000)
+  }
+
+  getLocation()
+
+</script>
+
+<script>
+
+  function setCategory(e, category) {
+    e.preventDefault(); //기능하지 않도록 설정
+    e.stopPropagation(); //전파되는 것을 막음
+
+    //alert(category)
+
+    const filteredStores = stores.filter(store => {
+      if(category === 'ALL') { //자바스크립트는 문자열을 비교할 떄 .equals를 사용하지 않고 ===를 사용
+        return true
+      }
+      return store.cat === category
+    })
+    console.log(filteredStores)
+
+    makeList(filteredStores)
+  }
+
+</script>
+
+</body>
+</html>
