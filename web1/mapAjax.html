@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .map {
+      width: 100vw;
+      height: 50vh;
+      background-color: lightslategray;
+    }
+
+    ul {
+      list-style: none;
+    }
+</style>
+
+<div id="map">
+
+</div>
+<div>
+  <button class="btn" data-cat="kor">한식</button>
+  <button class="btn" data-cat="chi">중식</button>
+  <button class="btn" data-cat="jap">일식</button>
+</div>
+
+<div>
+  <ul class="storeList">
+
+  </ul>
+</div>
+
+<script>
+  const ipObj = { //ip에 연결
+    kor: "http://192.168.1.29:8080/stores/all",
+    chi: "http://192.168.1.27:8080/stores/all",
+    jap: "http://localhost:8080/stores/all",
+  }
+
+  const storeList = document.querySelector(".storeList")
+
+  document.querySelectorAll(".btn").forEach((element) => {
+    //console.log(element)
+    const type = element.getAttribute("data-cat")
+    // console.log(type)
+    element.addEventListener("click", () => {
+      // console.log(type)
+      loadStoreData(type)
+    }, false)
+
+  })
+
+  async function loadStoreData(type) {
+    const url = ipObj[type]
+
+    const response = await fetch(url)
+    const arr = await response.json()
+
+    makeList(arr)
+  }
+
+  function makeList(arr) {
+    let str = "";
+    for(let i = 0; i < arr.length; i++) {
+      const {sno,name,lat,lng,menus} = arr[i]
+
+      str += `<li>${sno}---${name} : ${menus}</li>`
+    }
+    storeList.innerHTML = str;
+  }
+
+
+</script>
+
+</body>
+</html>
