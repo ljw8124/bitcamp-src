@@ -1,0 +1,66 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.7.1'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+// https://mvnrepository.com/artifact/org.springframework/spring-core
+    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.9' //spring core library
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.9' //spring context library
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.9' //spring webmvc library
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.9' //spring web library
+    implementation group: 'org.springframework', name: 'spring-test', version: '5.3.9' //spring test환경 설정
+    //여기까지가 완전 기초 설정
+
+    // https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl
+    implementation group: 'javax.servlet', name: 'jstl', version: '1.2' //jstl
+
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20' //lombok
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20' //lombok test setting
+
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20' //annotation library
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20' //annotation test setting
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.0' //Log4j Core library
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.0' //Log4j API library
+
+// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26' //mySQL library
+
+    // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.0.0' //HikariCP library
+
+
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
