@@ -52,7 +52,6 @@ public class ListController extends HttpServlet {
         log.info(pageDTO);
 
 
-
         PageMaker pageMaker = new PageMaker(pageDTO.getPage(), pageDTO.getSize(), total);
         request.setAttribute("pageMaker", pageMaker);
 
