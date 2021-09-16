@@ -2,6 +2,7 @@ package org.zerock.jex01.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class BoardController {
 
     }
 
+    @PreAuthorize("isAuthenticated()") //인증된 사용자만 접속 가능하도록
     @GetMapping("/register")
     public void registerGet() {
         log.info("==============c        getRegister==================");
@@ -67,12 +69,14 @@ public class BoardController {
         model.addAttribute("pageMaker", new PageMaker(page, size, total));
     }
 
+    @PreAuthorize("isAuthenticated()") //자격이 있어야 접속가능 -> 비회원은 조회,수정 불가능
     @GetMapping(value = {"/read", "/modify", "/read2"}) //집합으로 표현 가능함-> 메서드 리팩토링
     public void read(Long bno, PageRequestDTO pageRequestDTO, Model model) {
         log.info("=============c        getRead==================" + bno);
         log.info("=============c        getRead==================" + pageRequestDTO);
         model.addAttribute("boardDTO", boardService.read(bno));
     }
+
 
     @PostMapping("/remove")
     public String remove(Long bno, RedirectAttributes redirectAttributes) {
@@ -85,6 +89,8 @@ public class BoardController {
         return "redirect:/board/list"; //삭제완료 모달창 필요
     }
 
+
+    @PreAuthorize("principal.mid == #boardDTO.writer") //만약 글 쓴 사람과 지금 접속 중인 사람이 같다면 수정 가능
     @PostMapping("/modify")
     public String modify(BoardDTO boardDTO, PageRequestDTO pageRequestDTO, RedirectAttributes redirectAttributes) {
         log.info("===============================");

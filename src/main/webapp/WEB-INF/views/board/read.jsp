@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../includes/header.jsp"%>
 
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -63,7 +65,10 @@
 
                         <div class="card-footer">
                             <button type="button" class="btn btn-default btnList" style="float:left">목록</button>
-                            <button type="button" class="btn btn-info btnMod" style="float:right">수정/삭제</button>
+                            <sec:authentication property="principal" var="memberDTO"/>
+                                <c:if test="${boardDTO.writer eq memberDTO.mid}">
+                                    <button type="button" class="btn btn-info btnMod" style="float:right">수정/삭제</button>
+                                </c:if>
                         </div>
 
 
@@ -139,7 +144,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="text" name="replyer">
+                <input type="text" name="replyer" readonly value="<sec:authentication property="principal.mid"/>">
                 <input type="text" name="reply">
 
             </div>
@@ -165,7 +170,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="rno">
+                <input type="hidden" name="rno" readonly value="<sec:authentication property="principal.mid"/>">
                 <input type="text" name="replyerMod">
                 <input type="text" name="replyMod">
             </div>
@@ -262,7 +267,7 @@
     doE(reply).then(result => console.log(result))
 */
 
-    //즉시 실행함수가 아닌 일반 함수로 정의한 이유 ? 댓글 추가 중 다른 사람이 댓글을 추가한 경우 다시 그 목록을 출력해야함
+    //즉시 실행함수가 아닌 일반 함수로 정의한 이유? 댓글 추가 중 다른 사람이 댓글을 추가한 경우 다시 그 목록을 출력해야함
     // -> 추가할 때 마다 리스트를 가져오는게 좋으므로
     function getList() {
         const target = document.querySelector(".direct-chat-messages")
@@ -302,7 +307,7 @@
 
     //jQuery style
     //small modal를 변수로 저장
-    const modalDiv = $('#modal-sm')
+    const modalDiv = $('#modal-sm') //id는 #
 
     let oper = null
 

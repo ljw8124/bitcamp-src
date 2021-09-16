@@ -38,7 +38,7 @@ public class RootConfig {
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
         //config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-       config.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy"); //sql문을 보기위해서 추가
+       config.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy"); //sql문을 보기위해서 log4jdbc 추가
         //config.setJdbcUrl("jdbc:mysql://localhost:3306/springdb");
        config.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/springdb"); //sql문을 로그에서 보기위해서 추가
        config.setUsername("springuser");
