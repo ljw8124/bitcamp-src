@@ -41,7 +41,6 @@ public class JsonExceptionAdvice extends AccessDeniedHandlerImpl {
         if (request.getContentType() != null) {
 
         } else {
-
             super.handle(request, response, accessDeniedException);
         }
     }

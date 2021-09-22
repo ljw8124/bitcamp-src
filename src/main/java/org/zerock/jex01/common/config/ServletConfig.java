@@ -19,6 +19,7 @@ import org.zerock.jex01.common.converter.StringToLocalDateTimeConverter;
 @ComponentScan(basePackages = {"org.zerock.jex01.common.exception","org.zerock.jex01.common.controller"})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ServletConfig implements WebMvcConfigurer {
+
     //이해 필요 코드
     @Override
     public void addFormatters(FormatterRegistry registry) {
