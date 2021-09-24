@@ -300,7 +300,7 @@
         })
     }
 
-    //최초 실행 -> 즉시실행함수
+    //최초 실행 -> 즉시실행함수, 자바에서 default 함수랑 같음
     (function () {
         getList()
     })()
@@ -322,10 +322,10 @@
     document.querySelector(".operBtn").addEventListener("click", function () {
 
         const bno = '${boardDTO.bno}'
-        const replyer = document.querySelector("input[name='replyer']").value //jQuery
+            const replyer = document.querySelector("input[name='replyer']").value //jQuery
         const reply = document.querySelector("input[name='reply']").value
 
-        if(oper === 'add') {
+        if(oper === 'add') { //String 은 === 으로 논리 연산자를 대신함
             const replyObj = {bno:bno, replyer:replyer, reply:reply} //키값 할당
             console.log(replyObj)
             addReply(replyObj).then(result => {

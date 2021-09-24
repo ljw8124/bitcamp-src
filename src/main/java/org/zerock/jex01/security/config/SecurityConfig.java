@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = "org.zerock.jex01.security.service")
 //요즘에는 어노테이션으로 하지만 옛날 방식(상속)으로 진행
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-  /*  { //default 블럭으로 기본으로 실행할 블럭
+  /*{ //default 블럭으로 기본으로 실행할 블럭
         log.info("Security Config....................");
         log.info("Security Config....................");
         log.info("Security Config....................");

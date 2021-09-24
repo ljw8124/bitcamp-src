@@ -107,6 +107,7 @@
                                     </c:if>
 
                                     <c:forEach begin="${pageMaker.start}" end="${pageMaker.end}" var="num">
+                                        <!-- page가 존재한다면 active(보여주고) 없다면 '' 공백으로 보여지지 않음 -->
                                     <li class="page-item ${pageMaker.page == num?'active':''}"><a class="page-link" href="javascript:movePage(${num})">${num}</a></li>
                                     </c:forEach>
 

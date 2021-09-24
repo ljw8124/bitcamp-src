@@ -90,7 +90,7 @@ public class UploadController {
     public List<UploadResponseDTO> uploadPost(MultipartFile[] uploadFiles) { //formData에 넘겨준 키의 이름으로 파라미터를 받아야함
 
         log.info("----------------------------------");
-        if (uploadFiles != null && uploadFiles.length > 0) {
+        if (uploadFiles != null && uploadFiles.length > 0){
 
             List<UploadResponseDTO> uploadedList = new ArrayList<>();
 

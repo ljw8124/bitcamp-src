@@ -32,6 +32,7 @@ public class MemberDTO extends User {
     }
 
 
+    //생성자 만들기
     public MemberDTO(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
