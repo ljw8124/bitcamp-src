@@ -34,14 +34,15 @@ public class RootConfig {
 
     //기본적으로 싱글톤 -> 한번만 로딩함함
     //DB 연결
-   @Bean
+    @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
         //config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-       config.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy"); //sql문을 보기위해서 log4jdbc 추가
+        config.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy"); //sql문을 보기위해서 log4jdbc 추가
         //config.setJdbcUrl("jdbc:mysql://localhost:3306/springdb");
-       config.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/springdb"); //sql문을 로그에서 보기위해서 추가
-       config.setUsername("springuser");
+        config.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/springdb?allowMultiQueries=true");
+        //sql문을 로그에서 보기위해서 추가, ?allowMultiQueries=true는 다중 쿼리를 쓰기 위해서 작성
+        config.setUsername("springuser");
         config.setPassword("springuser");
 
         HikariDataSource dataSource = new HikariDataSource(config);
@@ -58,8 +59,10 @@ public class RootConfig {
     public ArrayList<String> names() { //예외적으로 메서드 이름을 명사로 설정
         ArrayList<String> list = new ArrayList<>();
         list.add("AAA");
-        list.add("BBB");;
-        list.add("CCC");;
+        list.add("BBB");
+        ;
+        list.add("CCC");
+        ;
 
         return list;
     }

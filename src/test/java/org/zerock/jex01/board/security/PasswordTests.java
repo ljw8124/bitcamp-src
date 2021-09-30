@@ -132,6 +132,11 @@ public class PasswordTests {
         }
     }
 
+    @Test
+    public void memberTest() {
+        log.warn(memberMapper.findByMid("user3"));
+    }
+
 
 
 

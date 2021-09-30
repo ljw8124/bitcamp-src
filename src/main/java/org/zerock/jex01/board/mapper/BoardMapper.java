@@ -31,4 +31,6 @@ public interface BoardMapper {
 
     int deleteAttach(Long bno);
 
+    void test();
+
 }

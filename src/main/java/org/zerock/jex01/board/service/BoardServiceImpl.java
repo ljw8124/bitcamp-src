@@ -23,13 +23,14 @@ public class BoardServiceImpl implements BoardService{
     public Long register(BoardDTO boardDTO) {
         Board board = boardDTO.getDomain();
 
-        boardMapper.insert(board);
+        boardMapper.insert(board); //board에 내용 먼저 넣어주고
 
         Long bno = board.getBno();
 
         //bno는 게시글이 등록할 때 만들어지므로 따로 bno를 넣어주어야함.
         board.getAttachList().forEach(boardAttach -> {
             boardAttach.setBno(bno);
+            //attach에 해당하는 file을 넣어줌
             boardMapper.insertAttach(boardAttach);
         });
 

@@ -337,6 +337,7 @@
         }
 
     },false)
+
     //수정,삭제 DOM
     const modModal = $("#modal-lg")
     const modReplyer = document.querySelector("input[name='replyerMod']")

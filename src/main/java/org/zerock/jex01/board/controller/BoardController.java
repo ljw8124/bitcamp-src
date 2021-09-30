@@ -43,7 +43,7 @@ public class BoardController {
     @PostMapping("/register")
     public String registerPost(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
         log.info("==============c        postRegister==================");
-        log.info("boardDTO : " + boardDTO);
+        log.warn("boardDTO : " + boardDTO);
 
         Long bno = boardService.register(boardDTO);
 

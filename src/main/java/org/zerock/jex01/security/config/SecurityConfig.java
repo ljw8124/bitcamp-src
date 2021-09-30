@@ -85,11 +85,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CustomAuthenticationEntryPoint customAuthenticationEntryPoint(){
         return new CustomAuthenticationEntryPoint();
     }
-
     @Bean
     public CustomLoginSuccessHandler customLoginSuccessHandler() {
         return new CustomLoginSuccessHandler();
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -36,10 +36,12 @@
         <include refid="search"></include> <!-- 위에 id가 search인 sql문을 삽입 -->
 
         order by bno desc limit #{skip},#{size}
+
     </select>
 
     <select id="getCount" resultType="int">
-        select count(bno) from tbl_board
+        select count(bno) from tbl_board;
+
 
         <include refid="search"></include>
     </select>
@@ -89,6 +91,7 @@
     <insert id="insertAttach">
         insert into tbl_attach (uuid, bno, path, filename, image)
         values (#{uuid}, #{bno}, #{path}, #{fileName}, #{image})
+
     </insert>
 
     <delete id="deleteAttach">
