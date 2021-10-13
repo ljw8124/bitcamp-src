@@ -24,7 +24,7 @@ public class Reply {
 
     //단방향 참조
     //관계형성
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) //지연로딩
     private Board board;
 
     @CreationTimestamp

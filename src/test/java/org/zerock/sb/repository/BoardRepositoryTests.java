@@ -56,8 +56,26 @@ public class BoardRepositoryTests {
             Object[] arr = (Object[]) element;
 
             log.info(Arrays.toString(arr));
-
         });
+    }
+
+    @Test
+    public void testSearchWithReplyCount() {
+
+        char[] typeArr = {'T'};
+
+        String keyword = "10";
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+
+        Page<Object[]> result = boardRepository.searchWithReplyCount(typeArr, keyword, pageable);
+
+        log.info("total: " + result.getTotalPages());
+
+        result.get().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+
     }
 
 }

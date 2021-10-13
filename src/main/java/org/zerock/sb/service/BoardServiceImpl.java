@@ -9,11 +9,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zerock.sb.dto.BoardDTO;
+import org.zerock.sb.dto.BoardListDTO;
 import org.zerock.sb.dto.PageRequestDTO;
 import org.zerock.sb.dto.PageResponseDTO;
 import org.zerock.sb.entity.Board;
 import org.zerock.sb.repository.BoardRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
     private final ModelMapper modelMapper;
 
@@ -35,7 +37,7 @@ public class BoardServiceImpl implements BoardService{
         //BoardRepository save() -> Long
         boardRepository.save(board);
 
-        return  board.getBno();
+        return board.getBno();
     }
 
     @Override
@@ -47,15 +49,16 @@ public class BoardServiceImpl implements BoardService{
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("bno").descending());
+
         Page<Board> result = boardRepository.search1(typeArr, keyword, pageable);
 
         List<BoardDTO> dtoList = result.get().map(
-                board -> modelMapper.map(board, BoardDTO.class))
+                        board -> modelMapper.map(board, BoardDTO.class))
                 .collect(Collectors.toList());
 
         long totalCount = result.getTotalElements();
 
-        return new PageResponseDTO<>(pageRequestDTO, (int)totalCount, dtoList);
+        return new PageResponseDTO<>(pageRequestDTO, (int) totalCount, dtoList);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class BoardServiceImpl implements BoardService{
 
         Optional<Board> result = boardRepository.findById(bno);
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             throw new RuntimeException("NOT FOUND");
         }
 
@@ -74,7 +77,7 @@ public class BoardServiceImpl implements BoardService{
     public void modify(BoardDTO boardDTO) {
         Optional<Board> result = boardRepository.findById(boardDTO.getBno());
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             throw new RuntimeException("NOT FOUND");
         }
         Board board = result.get();
@@ -88,6 +91,32 @@ public class BoardServiceImpl implements BoardService{
     public void remove(Long bno) {
 
         boardRepository.deleteById(bno);
+    }
+
+    @Override
+    public PageResponseDTO<BoardListDTO> getListWithReplyCount(PageRequestDTO pageRequestDTO) {
+
+        char[] typeArr = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getSize(),
+                Sort.by("bno").descending());
+
+        Page<Object[]> result = boardRepository.searchWithReplyCount(typeArr, keyword, pageable);
+
+        List<BoardListDTO> dtoList = result.get().map(objects -> {
+            BoardListDTO boardListDTO = BoardListDTO.builder()
+                    .bno((Long)objects[0])
+                    .title((String)objects[1])
+                    .writer((String)objects[2])
+                    .regDate((LocalDateTime)objects[3])
+                    .replyCount((Long)objects[4])
+                    .build();
+            return boardListDTO;
+        }).collect(Collectors.toList());
+
+        return new PageResponseDTO<>(pageRequestDTO, (int)result.getTotalElements(), dtoList);
     }
 
 }
