@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.zerock.sb.dto.PageRequestDTO;
 import org.zerock.sb.dto.PageResponseDTO;
 import org.zerock.sb.dto.ReplyDTO;
+import org.zerock.sb.entity.Board;
 import org.zerock.sb.entity.Reply;
 import org.zerock.sb.repository.ReplyRepository;
 
@@ -25,11 +26,28 @@ public class ReplyServiceImpl implements ReplyService{
     private final ReplyRepository repository;
     private final ModelMapper modelMapper;
 
+    private int calcLastPage(Long bno, double size) {
+        int count = repository.getReplyCountOfBoard(bno);
+        int lastPage = (int)(Math.ceil(count / size));
+
+        return lastPage;
+    }
+
     @Override
     public PageResponseDTO<ReplyDTO> getListOfBoard(Long bno, PageRequestDTO pageRequestDTO) {
 
-        Pageable pageable =
-                PageRequest.of(pageRequestDTO.getPage()-1, pageRequestDTO.getSize(), Sort.by("rno").descending());
+        Pageable pageable = null;
+
+        if(pageRequestDTO.getPage() == -1) {
+            int lastPage = calcLastPage(bno, pageRequestDTO.getSize()); // -1 댓글 없는 경우, 마지막 댓글 페이지 리턴
+            if(lastPage <= 0) {
+                lastPage = 1;
+            }
+            pageRequestDTO.setPage(lastPage);
+        }
+
+        pageable = PageRequest.of(pageRequestDTO.getPage() -1, pageRequestDTO.getSize());
+
 
         Page<Reply> result = repository.getListByBno(bno, pageable);
 
@@ -40,5 +58,18 @@ public class ReplyServiceImpl implements ReplyService{
         //replyDTOList.forEach(replyDTO -> log.info(replyDTO));
 
         return new PageResponseDTO<>(pageRequestDTO, (int)result.getTotalElements(), replyDTOList);
+    }
+
+    @Override
+    public Long register(ReplyDTO replyDTO) {
+
+        //Board board = Board.builder().bno(replyDTO.getBno()).build();
+
+        Reply reply = modelMapper.map(replyDTO, Reply.class);
+
+        //log.info(reply);
+        repository.save(reply);
+
+        return reply.getRno();
     }
 }

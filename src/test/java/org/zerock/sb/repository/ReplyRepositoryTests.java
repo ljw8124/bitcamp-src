@@ -4,10 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.zerock.sb.entity.Board;
 import org.zerock.sb.entity.Reply;
 
@@ -74,6 +71,41 @@ public class ReplyRepositoryTests {
         Page<Reply> result = replyRepository.getListByBno(197L, pageable);
 
         log.info(result.getTotalElements());
+
+        result.get().forEach(reply -> log.info(reply));
+    }
+
+    @Test
+    public void testReplyCountOfBoard() {
+
+        long bno = 195L;
+        int size = 10;
+
+        int count = replyRepository.getReplyCountOfBoard(bno);
+        int lastPage = (int)(Math.ceil(count / (double)size));
+
+        /*
+        //삼항연산자 대신 쓰는 if문
+        if(lastPage == 0) {
+            lastPage = 1;
+        }
+        */
+
+        /*
+        //진짜 끝 페이지를 찾는 코드
+        int lastEnd = lastPage * size;
+        int lastStart = lastEnd - size;
+
+        log.info(lastStart + " : " + lastEnd);
+        */
+
+        //댓글 없는 경우 대비 삼항조건문
+        Pageable pageable = PageRequest.of(lastPage <= 0 ? 0 : lastPage -1, size);
+
+        Page<Reply> result = replyRepository.getListByBno(bno, pageable);
+
+        log.info("total: " + result.getTotalElements());
+        log.info("......." + result.getTotalPages());
 
         result.get().forEach(reply -> log.info(reply));
 

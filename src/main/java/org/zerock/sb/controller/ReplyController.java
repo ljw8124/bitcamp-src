@@ -23,5 +23,13 @@ public class ReplyController {
 
     }
 
+    @PostMapping("")
+    public PageResponseDTO<ReplyDTO> register(@RequestBody ReplyDTO replyDTO) {
+
+        replyService.register(replyDTO);
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(-1).build(); //page가 -1이 되면 마지막 페이지로 이동함
+
+        return  replyService.getListOfBoard(replyDTO.getBno(), pageRequestDTO);
+    }
 
 }

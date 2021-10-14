@@ -28,7 +28,6 @@ public class PageResponseDTO<E> {
     //결과 데이터
     private List<E> dtoList;
 
-
     public PageResponseDTO(PageRequestDTO pageRequestDTO, int count){
         this.page = pageRequestDTO.getPage();
         this.size = pageRequestDTO.getSize();
