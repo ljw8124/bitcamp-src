@@ -29,7 +29,6 @@ public class BoardController {
 
     @GetMapping("/register")
     public void register() {
-
     }
 
     @PostMapping("/register")

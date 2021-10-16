@@ -32,4 +32,22 @@ public class ReplyController {
         return  replyService.getListOfBoard(replyDTO.getBno(), pageRequestDTO);
     }
 
+    @DeleteMapping("/{bno}/{rno}")
+    public PageResponseDTO<ReplyDTO> remove(
+            @PathVariable("bno") Long bno,
+            @PathVariable("rno") Long rno,
+            PageRequestDTO pageRequestDTO) {
+
+        return replyService.removeReply(bno, rno, pageRequestDTO);
+    }
+
+    @PutMapping("/{bno}/{rno}")
+    public PageResponseDTO<ReplyDTO> modify(
+            @PathVariable("bno") Long bno,
+            @PathVariable("rno") Long rno,
+            @RequestBody ReplyDTO replyDTO, //obj를 json으로 자동변환
+            PageRequestDTO pageRequestDTO) {
+
+        return replyService.modifyReply(replyDTO, pageRequestDTO);
+    }
 }

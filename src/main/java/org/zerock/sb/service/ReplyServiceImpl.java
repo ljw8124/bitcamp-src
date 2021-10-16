@@ -72,4 +72,26 @@ public class ReplyServiceImpl implements ReplyService{
 
         return reply.getRno();
     }
+
+    @Override
+    public PageResponseDTO<ReplyDTO> removeReply(Long bno, Long rno, PageRequestDTO pageRequestDTO) {
+
+        repository.deleteById(rno);
+
+        return getListOfBoard(bno, pageRequestDTO);
+    }
+
+    @Override
+    public PageResponseDTO<ReplyDTO> modifyReply(ReplyDTO replyDTO, PageRequestDTO pageRequestDTO) {
+
+        Reply reply = repository.findById(replyDTO.getRno()).orElseThrow(); //없으면 예외 던지기
+
+        reply.setText(replyDTO.getReplyText());
+
+        repository.save(reply);
+
+        Long bno = replyDTO.getBno();
+
+        return getListOfBoard(bno, pageRequestDTO);
+    }
 }
