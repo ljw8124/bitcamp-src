@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
+//QuerydslRepositorySupport를 상속하면서 QBoard 생성, 동적쿼리 처리 가능
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch{
 
     public BoardSearchImpl() {
@@ -24,7 +25,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
     public Page<Board> search1(char[] typeArr, String keyword, Pageable pageable) {
         log.info("....................search1...........................");
 
-        //표준방식
+        //표준방식 -> 동적쿼리 처리위해서 생성
         QBoard board = QBoard.board;
 
         JPQLQuery<Board> jpqlQuery = from(board);

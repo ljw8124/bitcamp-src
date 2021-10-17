@@ -20,7 +20,6 @@
             <button id="searchBtn" class="btn btn-info" onclick="search()">Search</button>
         </div>
 
-
         <table class="table">
             <thead>
             <tr>
@@ -52,7 +51,7 @@
                 </a>
             </li>
 
-            <li th:each="num: ${#numbers.sequence( responseDTO.start , responseDTO.end)}" th:class="|page-item ${responseDTO.page == num?'active':''}|">
+            <li th:each="num: ${#numbers.sequence(responseDTO.start , responseDTO.end)}" th:class="|page-item ${responseDTO.page == num?'active':''}|">
                 <a class="page-link" th:href="|javascript:movePage(${num})|">[[${num}]]</a>
             </li>
 
@@ -104,7 +103,7 @@
 
         function movePage(page, bno) {
 
-            console.log(pageRequest)
+            //console.log(pageRequest)
 
             let uri ="";
 

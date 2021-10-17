@@ -30,6 +30,7 @@ public class Reply {
     @CreationTimestamp
     private LocalDateTime replyDate;
 
+    //reply text만 변경할 것이므로 따로 메서드로 정의
     public void setText(String replyText) {
         this.replyText = replyText;
     }
