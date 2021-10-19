@@ -30,6 +30,9 @@
             </tr>
             </thead>
             <tbody>
+
+            <input type="text" id="keyword"  th:value="${pageRequestDTO}">
+
             <tr th:each="board:${responseDTO.dtoList}">
                 <th scope="row">[[${board.bno}]]</th>
                 <td><a th:href="|javascript:movePage(${responseDTO.page}, ${board.bno} )|">[[${board.title}]]</a>

@@ -17,6 +17,7 @@ public class PageResponseDTO<E> {
 
     //시작 페이지 번호
     private int start;
+
     //끝 페이지 번호
     private int end;
 
