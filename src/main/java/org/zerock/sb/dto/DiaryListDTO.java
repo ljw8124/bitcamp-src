@@ -12,22 +12,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DiaryDTO {
+public class DiaryListDTO {
 
     private Long dno;
 
     private String title;
 
-    private String content;
-
     private String writer;
 
     private LocalDateTime regDate;
-    private LocalDateTime modDate;
 
     private List<String> tags;
     private List<DiaryPictureDTO> pictures;
 
-
+    private int totalScore;
 
 }

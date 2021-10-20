@@ -5,12 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.sb.dto.DiaryDTO;
-import org.zerock.sb.dto.DiaryPictureDTO;
-import org.zerock.sb.entity.DiaryPicture;
+import org.zerock.sb.dto.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -25,19 +22,19 @@ public class DiaryServiceTests {
     @Test
     public void registerTest() {
 
-        Set<String> tags = IntStream.rangeClosed(1, 3).mapToObj(j -> "tag_" + j)
-                .collect(Collectors.toSet());
+        List<String> tags = IntStream.rangeClosed(1, 3).mapToObj(j -> "tag_" + j)
+                .collect(Collectors.toList());
 
-        Set<DiaryPictureDTO> pictures = IntStream.rangeClosed(1, 3).mapToObj(j -> {
+        List<DiaryPictureDTO> pictures = IntStream.rangeClosed(1, 3).mapToObj(j -> {
                     DiaryPictureDTO picture = DiaryPictureDTO.builder()
                             .uuid(UUID.randomUUID().toString())
                             .fileName("img" + j + ".jpg")
-                            .savaPath("2021/10/18")
+                            .savePath("2021/10/18")
                             .idx(j)
                             .build();
 
                     return picture;
-                }).collect(Collectors.toSet());
+                }).collect(Collectors.toList());
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .title("title....")
@@ -60,6 +57,24 @@ public class DiaryServiceTests {
         DiaryDTO diaryDTO = diaryService.read(dno);
 
         log.info(diaryDTO);
+    }
+
+    @Test
+    public void listTest() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
+
+        log.info(diaryService.getList(pageRequestDTO));
+
+    }
+
+    @Test
+    public void listWithFavoriteTest() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
+
+        PageResponseDTO<DiaryListDTO> responseDTO = diaryService.getListWithFavorite(pageRequestDTO);
+
+        //log.info(responseDTO);
+
     }
 
 }

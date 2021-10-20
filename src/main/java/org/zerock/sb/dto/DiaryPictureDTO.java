@@ -11,7 +11,11 @@ public class DiaryPictureDTO {
 
     private String uuid;
     private String fileName;
-    private String savaPath;
+    private String savePath;
     private int idx;
+    
+    public String getLink() {
+        return savePath + "/s_" + uuid + "_" + fileName;
+    }
 
 }

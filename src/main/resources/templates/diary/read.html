@@ -11,9 +11,9 @@
         </div>
         <div class="card-body">
             <div class="input-group mb-3">
-                <span class="input-group-text">Bno</span>
-                <input type="text" name="bno" class="form-control" readonly
-                       th:value="${dto.bno}">
+                <span class="input-group-text">dno</span>
+                <input type="text" name="dno" class="form-control" readonly
+                       th:value="${dto.dno}">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">Title</span>
@@ -48,13 +48,36 @@
             <div class="my-4">
                 <div class="my-4">
                     <div class="float-end">
-                        <button type="button" class="btn btn-primary" th:onclick="|modify(${dto.bno})|">Modify</button>
+                        <button type="button" class="btn btn-primary" th:onclick="|modify(${dto.dno})|">Modify</button>
                         <button type="button" class="btn btn-secondary" th:onclick="|moveList()|">List</button>
                     </div>
                 </div>
 
             </div>
         </div>
+    </div>
+
+    <style>
+        .tagDiv {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+        }
+        .tagDiv li {
+            margin: 0.3em;
+            background-color: #2c3034;
+            border-radius: 0.5em;
+            color: white;
+        }
+    </style>
+
+    <div>
+        <div class="pictureDiv">
+            <img th:each="picture:${dto.pictures}" th:src="@{/display(fileName=${picture.getLink()})}">
+        </div>
+        <ul class="tagDiv">
+            <li th:each="tag:${dto.tags}">[[|#${tag}|]]</li>
+        </ul>
     </div>
     <!-- end card -->
     <div class="card">
@@ -95,12 +118,12 @@
     </div>
 
 </div>
-
+>
 
 <th:block layout:fragment="script">
 
     <script th:inline="javascript">
-        function modify(bno) {
+        function modify(dno) {
 
             const page = [[${pageRequestDTO.page}]]
             const size = [[${pageRequestDTO.size}]]
@@ -113,7 +136,7 @@
                 searchQuery += `&type=${type}&keyword=${keyword}`
             }
 
-            self.location = `/board/modify?bno=${bno}&page=${page}&size=${size}` + searchQuery
+            self.location = `/diary/modify?dno=${dno}&page=${page}&size=${size}` + searchQuery
 
         }
 
@@ -130,7 +153,7 @@
                 searchQuery += `&type=${type}&keyword=${keyword}`
             }
 
-            self.location = `/board/list?page=${page}&size=${size}` + searchQuery
+            self.location = `/diary/list?page=${page}&size=${size}` + searchQuery
 
         }
 
@@ -140,7 +163,7 @@
 
     <script th:inline="javascript">
 
-        const bno = [[${dto.bno}]]
+        const dno = [[${dto.dno}]]
         let replyPage = 1
         let replySize = 10
 
@@ -189,7 +212,7 @@
         //실제 list를 출력하는 메서드
         async function getList(pageNum) {
 
-            const response = await axios.get(`/replies/list/${bno}?page=${pageNum}`)
+            const response = await axios.get(`/replies/list/${dno}?page=${pageNum}`)
             const replyPageResponse = await response.data
 
             //console.log(replyPageResponse)
@@ -200,7 +223,7 @@
         function registerReply() {
 
             const replyeObj = {
-                bno: bno,
+                dno: dno,
                 replyer: document.querySelector("input[name='replyer']").value,
                 replyText: document.querySelector("input[name='replyText']").value,
             }
@@ -267,7 +290,7 @@
             const rno = cloneReply.getAttribute("data-rno")
 
             async function sendDeleteReply() {
-                const response = await axios.delete(`/replies/${bno}/${rno}?page=${replyPage}&size=${replySize}`)
+                const response = await axios.delete(`/replies/${dno}/${rno}?page=${replyPage}&size=${replySize}`)
                 const replyPageResponse = await response.data
 
                 alert("댓글이 삭제되었습니다.")
@@ -283,10 +306,10 @@
             const rno = cloneReply.getAttribute("data-rno")
             const replyText = document.querySelector(".editText").value
 
-            const replyObj = {rno ,replyText, bno} //키 값의 변수명이 같을 경우 이렇게 작성 가능
+            const replyObj = {rno ,replyText, dno} //키 값의 변수명이 같을 경우 이렇게 작성 가능
 
             async function updateReply() {
-                const response = await axios.put(`/replies/${bno}/${rno}?page=${replyPage}&size=${replySize}`, replyObj)
+                const response = await axios.put(`/replies/${dno}/${rno}?page=${replyPage}&size=${replySize}`, replyObj)
                 const replyPageResponse = await response.data
 
                 console.log(replyObj)
@@ -295,7 +318,7 @@
                 makeListAndPagination(replyPageResponse)
             }
 
-           updateReply()
+            updateReply()
         }
 
 

@@ -10,11 +10,12 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode(of = "uuid")
 public class DiaryPicture implements Comparable<DiaryPicture>{
 
     private String uuid;
     private String fileName;
-    private String savaPath;
+    private String savePath;
     private int idx; //조회 시 순번
 
     @Override
