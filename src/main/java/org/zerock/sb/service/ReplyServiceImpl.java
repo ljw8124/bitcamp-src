@@ -6,12 +6,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zerock.sb.dto.PageRequestDTO;
 import org.zerock.sb.dto.PageResponseDTO;
 import org.zerock.sb.dto.ReplyDTO;
-import org.zerock.sb.entity.Board;
 import org.zerock.sb.entity.Reply;
 import org.zerock.sb.repository.ReplyRepository;
 
@@ -94,4 +92,5 @@ public class ReplyServiceImpl implements ReplyService{
 
         return getListOfBoard(bno, pageRequestDTO);
     }
+
 }

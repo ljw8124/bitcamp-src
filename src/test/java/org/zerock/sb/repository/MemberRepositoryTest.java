@@ -4,11 +4,12 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zerock.sb.entity.Member;
 import org.zerock.sb.entity.MemberRole;
 
-import java.awt.print.Pageable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -17,7 +18,10 @@ import java.util.stream.IntStream;
 public class MemberRepositoryTest {
 
     @Autowired
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void insertMembers() {
@@ -44,5 +48,18 @@ public class MemberRepositoryTest {
 
         });
     }
+
+    @Test
+    public void updateMemberTest() {
+
+        List<Member> memberList = memberRepository.findAll();
+
+        memberList.forEach(member -> {
+            member.changePassword(passwordEncoder.encode("1111"));
+
+            memberRepository.save(member);
+        });
+    }
+
 
 }

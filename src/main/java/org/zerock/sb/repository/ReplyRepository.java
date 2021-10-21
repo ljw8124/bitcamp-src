@@ -19,4 +19,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     @Query("select count(r) from Reply r where r.board.bno = :bno")
     int getReplyCountOfBoard(Long bno);
 
+    @Query("delete from Reply r where r.board.bno = :bno")
+    void deleteALLReplyByBno(Long bno);
+
 }

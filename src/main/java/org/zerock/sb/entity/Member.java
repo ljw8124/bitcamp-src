@@ -28,5 +28,9 @@ public class Member {
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
 
+    public void changePassword(String password) {
+        this.mpw = password;
+    }
+
 }
 

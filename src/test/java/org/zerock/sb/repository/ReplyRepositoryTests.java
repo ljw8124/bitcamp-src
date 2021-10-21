@@ -111,4 +111,12 @@ public class ReplyRepositoryTests {
 
     }
 
+    @Test
+    public void testdeleteALLReplyByBno() {
+
+        Long bno = 200L;
+
+        replyRepository.deleteALLReplyByBno(bno);
+    }
+
 }

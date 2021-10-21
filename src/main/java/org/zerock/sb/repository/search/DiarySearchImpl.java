@@ -29,6 +29,7 @@ public class DiarySearchImpl extends QuerydslRepositorySupport implements DiaryS
 
         query.leftJoin(qFavorite).on(qFavorite.diary.eq(qDiary));
         query.leftJoin(qDiary.pictures, qDiaryPicture);
+
         query.groupBy(qDiary);
 
         query.select(qDiary.dno, qDiary.title, qDiaryPicture, qFavorite.score.sum());
