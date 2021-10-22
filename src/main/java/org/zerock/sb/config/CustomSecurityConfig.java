@@ -9,6 +9,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.zerock.sb.security.filter.TokenCheckFilter;
+import org.zerock.sb.security.filter.TokenGenerateFilter;
+import org.zerock.sb.security.util.JWTUtil;
 
 @Configuration
 @Log4j2
@@ -26,9 +30,26 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
 
         log.info("CustomSecurityConfig...configure......................");
 
-        http.formLogin().loginPage("/customLogin").loginProcessingUrl("/login"); //인가/인증에 문제시 로그인 화면
+        http.formLogin().loginPage("/customLogin").loginProcessingUrl("/login"); //인가,인증에 문제시 로그인 화면
         http.csrf().disable();
         http.logout();
 
+        http.addFilterBefore(tokenCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(tokenGenerateFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public TokenCheckFilter tokenCheckFilter() {
+        return new TokenCheckFilter(jwtUtil());
+    }
+
+    @Bean
+    public JWTUtil jwtUtil() {
+        return new JWTUtil();
+    }
+
+    @Bean
+    public TokenGenerateFilter tokenGenerateFilter() throws Exception{
+        return new TokenGenerateFilter("/jsonApiLogin", authenticationManager(), jwtUtil());
     }
 }

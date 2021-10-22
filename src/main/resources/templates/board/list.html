@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorator="layout/layout2">
 
 <div layout:fragment="content">
 
+    <style>
+        .registerDiv {
+           alignment: right !important;
+        }
+    </style>
+
     <div class="card-body">
-        <div class="float-start">
-            <button type="button" class="btn btn-primary" th:onclick="|register()|">Register</button>
+
+        <div class="registerDiv float-start" sec:authorize="isAuthenticated()">
+            <button type="button" class="btn btn-outline-primary" th:onclick="|register()|">Register</button>
         </div>
 
         <div class="float-end" >
-            <select id="searchType"  >
+            <select id="searchType" class="flex-column">
                 <option value=""  th:selected="${pageRequestDTO.type} == null">-----------</option>
                 <option value="T"  th:selected="${pageRequestDTO.type} =='T'">제목</option>
                 <option value="C"  th:selected="${pageRequestDTO.type} =='C'">내용</option>
@@ -20,7 +28,7 @@
                 <option value="TCW" th:selected="${pageRequestDTO.type} == 'TCW'" >제목 혹은 내용 혹은 작성자</option>
             </select>
             <input type="text" id="keyword"  th:value="${pageRequestDTO.keyword}">
-            <button id="searchBtn" class="btn btn-info" onclick="search()">Search</button>
+            <button id="searchBtn" class="btn btn-outline-info" onclick="search()">Search</button>
         </div>
 
         <table class="table">
@@ -65,7 +73,6 @@
                     <span class="sr-only">Next</span>
                 </a>
             </li>
-
         </ul>
 
     </div>

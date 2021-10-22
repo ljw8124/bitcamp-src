@@ -10,6 +10,7 @@ import org.zerock.sb.entity.MemberRole;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -59,6 +60,17 @@ public class MemberRepositoryTest {
 
             memberRepository.save(member);
         });
+    }
+
+    @Test
+    public void findByIdWithRoleTest() {
+
+        String mid = "user100";
+
+        Optional<Member> memberOptional = memberRepository.getMemberEager(mid);
+
+        log.info(memberOptional);
+
     }
 
 

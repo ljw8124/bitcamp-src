@@ -2,6 +2,7 @@ package org.zerock.sb.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/register")
     public void getRegister() {
     }
@@ -46,6 +48,7 @@ public class DiaryController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/read")
     public void getRead(Long dno, PageRequestDTO pageRequestDTO, Model model) {
 
