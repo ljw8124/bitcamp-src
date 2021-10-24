@@ -49,10 +49,19 @@ public class DiaryController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/read")
+    @GetMapping(value = {"/read", "/modify"})
     public void getRead(Long dno, PageRequestDTO pageRequestDTO, Model model) {
 
         model.addAttribute("dto", diaryService.read(dno));
+    }
+
+    @PostMapping("/modify")
+    public String postModify(DiaryDTO diaryDTO, PageRequestDTO pageRequestDTO, RedirectAttributes redirectAttributes) {
+        log.info("postModify activate-----------------------------");
+
+
+
+        return "redirect:/diary/read";
     }
 
 
