@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import HelloWorld from "./component/HelloWorld2";
+import HelloWorld from "./component/HelloWorld";
 
 //react component
 function App() {

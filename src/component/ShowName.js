@@ -5,7 +5,7 @@ const ShowName = ({name, fn}) => { //구조분해할당 스타일
     //{}은 HTML에서 사용할 때. 전달받는 것은 그냥 사용
     //const fn = props.fn
 
-    const [num, setNum] = useState(10)
+    const [num, setNum] = useState(10) //Hooks 적용
 
     //함수호출
     fn()
