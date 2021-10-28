@@ -11,7 +11,7 @@ const CartDisplay = ({cart, remove, getTotal, change}) => {
     </li>)
 
     return (
-        <div className={styles.ulStyle}>
+        <div>
             <h1>장바구니</h1>
             <ul>
                 {list}
