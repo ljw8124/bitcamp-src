@@ -1,5 +1,4 @@
 import React from 'react';
-import useCounter from "../../hooks/useCounter";
 
 const CountButtons = ({change}) => { //props로 받기
 
