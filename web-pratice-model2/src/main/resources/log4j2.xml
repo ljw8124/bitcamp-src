@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration status="debug">
+
+    <Appenders> <!-- Appender는 기록하는 대상의 의미 -->
+        <!-- 콘솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <!-- %c는 클래스이름 %m%n은 메서드의 몇번째 라인 -->
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] %m%n"/>
+        </Console>
+    </Appenders>
+
+    <loggers>
+        <root level="debug" additivity="true">
+            <AppenderRef ref="console"/> <!-- ref는 주소를 의미. "console"에 출력하라. -->
+        </root>
+    </loggers>
+
+</configuration>
