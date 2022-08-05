@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ul class="menus">
+
+</ul>
+
+<div>
+    <ul class="cart">
+
+    </ul>
+    <h3 id="total"></h3>
+</div>
+
+<script>
+
+    const menus = [
+        {name: '빅맥', price: 5000},
+        {name: '상하이버거', price: 6000},
+        {name: '불고기버거', price: 4500},
+        {name: '더블치즈버거', price: 5500}, //js의 경우 마지막에 ,을 써도 무시함
+    ]
+
+    const cart = [] //cart를 배열로 일단 선언
+
+    const menusDIV = document.querySelector(".menus")
+    const cartDIV = document.querySelector(".cart")
+    const total = document.querySelector("#total")
+
+    let str = "";
+    for (let i = 0; i < menus.length; i++) {
+
+        const name = menus[i].name
+        const price = menus[i].price
+
+        str += `<li data-idx="${i}" data-name="${name}" data-price="${price}">${name}<span>${price}</span></li>`
+    }
+
+    menusDIV.innerHTML = str
+
+    //이벤트 처리
+    document.querySelector(".menus").addEventListener("click", function(event){
+        const targetLi = event.target;
+
+        const idx = targetLi.getAttribute("data-idx")
+
+        if(idx){ //if 부분에 대해서 찾아보아야함
+            console.log(idx)
+            refreshCart(menus[idx])
+            makeTotal()
+        }
+
+
+    }, false)
+
+    function refreshCart(menu) { //function 을 따로 만들어서 제공
+
+        if(menu) { //undefined 처리하기위해
+            cart.push(menu)
+            //cart UL 갱신
+        }
+
+        let str = "";
+        for (let i = 0; i < cart.length; i++) {
+            const name = cart[i].name
+            const price = cart[i].price
+            str += `<li>${name} - <span class="tprice">${price}</span><button data-idx="${i}">x</button></li>`
+
+        }
+        cartDIV.innerHTML = str
+
+
+    }
+
+    cartDIV.addEventListener("click", function (e) {
+
+        const target = e.target
+        if (target.matches("button")) {
+           const idx = target.getAttribute("data-idx")
+           console.log(idx)
+
+            cart.splice(idx,1)
+
+            refreshCart() //menu 가 없으므로 push는 안되고 화면에 cart가 가지고 있는 것들을 출력함 -> 말그래도 refresh
+            makeTotal()
+
+
+        }
+
+
+    },false)
+
+    //total 만들기
+    function makeTotal() {
+
+        console.log("-------makeTotal")
+
+        const priceSpans = document.querySelectorAll(".tprice")
+
+        let sum = 0
+        for (let i = 0; i < priceSpans.length; i++) {
+            sum += parseInt(priceSpans[i].innerHTML)
+        }
+        total.innerHTML = sum
+
+
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <ul class="items">
+        <li>
+            <div>
+                <span class="menu">빅맥</span>
+                <span class="price">5000</span>
+            </div>
+        </li>
+        <li>
+            <div>
+                <span class="menu">상하이버거</span>
+                <span class="price">6000</span>
+            </div>
+        </li>
+        <li>
+            <div>
+                <span class="menu">불고기버거</span>
+                <span class="price">4500</span>
+            </div>
+        </li>
+        <li>
+            <div>
+                <span class="menu">더블치즈버거</span>
+                <span class="price">6500</span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <ul class="cart">
+
+    </ul>
+</div>
+
+<div>
+    <h2 id="total"></h2>
+</div>
+
+<script>
+    var cart = document.querySelector(".cart") //class를 불러올때는 앞에 .을 붙임
+    var arr = document.querySelectorAll(".items li") //배열로 가져옴
+    var total = document.querySelector("#total") //id를 불러올때는 앞에 #을 붙임
+
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].addEventListener("click", function (e) {
+
+            console.log(e)
+            var targetLi = this
+            var menu = targetLi.querySelector(".menu").innerHTML;
+            var price = targetLi.querySelector(".price").innerHTML;
+
+            console.log(menu, price)
+
+            var str = "<li><span class='tmenu'>" + menu + "</span><span class='tprice'>" + price + "</span><button>x</button></li>"
+
+            cart.innerHTML += str
+
+            makeTotal()
+
+        }, false);
+    }
+
+    cart.addEventListener("click", function (e) {
+
+        console.log(e.target)
+
+        //만일 e.target이 버튼이었다면 -> 화면위주의 핸들링
+        if (e.target.matches('button')) {
+            var targetLi = e.target.parentElement
+            console.log(targetLi)
+            cart.removeChild(targetLi)
+            makeTotal()
+        }
+    }, false);
+
+    function makeTotal() {
+
+        console.log("-------makeTotal")
+
+        var priceSpans = document.querySelectorAll(".tprice")
+
+        var sum = 0
+        for (var i = 0; i < priceSpans.length; i++) {
+            sum += parseInt(priceSpans[i].innerHTML)
+        }
+        total.innerHTML = sum
+
+    }
+
+
+</script>
+
+
+</body>
+</html>

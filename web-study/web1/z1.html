@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button class="btn">B1</button>
+<button class="btn">B2</button>
+<button class="btn">B3</button>
+<button class="btn">B4</button>
+<button class="btn">B5</button>
+
+<script>
+
+  var arr = document.querySelectorAll(".btn"); //클래스가 5개 이므로 5개를 가져옴 -> 루프가능
+
+  for (let i = 0; i < arr.length; i++) {
+      //var가 아닌 let으로 i를 선언하면 i가 따로 만들어짐
+
+    var button = arr[i]
+
+    button.addEventListener("click", function () {
+      alert("VALUE : " + i) // value가 5가 될 때 리턴되므로
+    },false)
+  }
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

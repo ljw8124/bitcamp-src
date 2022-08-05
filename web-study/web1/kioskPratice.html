@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        text-align: center;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    img {
+        width: 300px;
+        height: 300px;
+        padding-left: 30px;
+    }
+
+    .items {
+        display: flex;
+        flex-direction: row; /* default가 row임 */
+        flex-wrap: wrap;
+    }
+
+    .price {
+        font-weight: bold;
+    }
+
+</style>
+<body>
+<div class="container">
+    <h1>상품</h1>
+    <ul class="items">
+        <li>
+            <div>
+                <img src="img/shoe1.jpg" class="img-thumbnail"><br>
+                <span class="menu">YeezyBoost 700 Static</span><br>
+                <span class="price">1400000</span>
+            </div>
+        </li>
+        <li>
+            <div>
+                <img src="img/shoe2.jfif" class="img-thumbnail"><br>
+                <span class="menu">AirJordan 1 High OG Travis Scott</span><br>
+                <span class="price">1300000</span>
+            </div>
+        </li>
+        <li>
+            <div>
+                <img src="img/shoe3.jpg" class="img-thumbnail"><br>
+                <span class="menu">AirMac BackToTheFuture</span><br>
+                <span class="price">12000000</span>
+            </div>
+        </li>
+        <li>
+            <div>
+                <img src="img/shoe4.jpg" class="img-thumbnail"><br>
+                <span class="menu">AirJordan 1 High Chicago OffWhite</span><br>
+                <span class="price">4000000</span>
+            </div>
+        </li>
+        <li>
+            <div>
+                <img src="img/shoe5.jpg" class="img-thumbnail"><br>
+                <span class="menu">Nike Dunk OG supreme black</span><br>
+                <span class="price">1200000</span>
+            </div>
+        </li>
+    </ul>
+</div>
+<hr>
+
+<div>
+    <h1>장바구니</h1>
+    <ul class="cart">
+
+    </ul>
+</div>
+
+<hr>
+
+<div>
+    <h1>총 금액</h1>
+    <h2 id="total"></h2>
+</div>
+
+<script>
+    var cart = document.querySelector(".cart") //class를 불러올때는 앞에 .을 붙임
+    var arr = document.querySelectorAll(".items li") //배열로 가져옴
+    var total = document.querySelector("#total") //id를 불러올때는 앞에 #을 붙임
+
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].addEventListener("click", function (e) {
+
+            console.log(e)
+            var targetLi = this
+            var menu = targetLi.querySelector(".menu").innerHTML;
+            var price = targetLi.querySelector(".price").innerHTML;
+
+            console.log(menu, price)
+
+            var str = "<li><span class='tmenu'>" + menu + "</span><span class='tprice'>" + price + "</span><button>x</button></li>"
+
+            cart.innerHTML += str
+
+            makeTotal()
+
+        }, false);
+    }
+
+    cart.addEventListener("click", function (e) {
+
+        console.log(e.target)
+
+        //만일 e.target이 버튼이었다면
+        if (e.target.matches('button')) {
+            var targetLi = e.target.parentElement
+            console.log(targetLi)
+            cart.removeChild(targetLi)
+            makeTotal()
+        }
+    }, false);
+
+    function makeTotal() {
+
+        console.log("-------makeTotal")
+
+        var priceSpans = document.querySelectorAll(".tprice") //totalPrice를 가져옴
+
+        var sum = 0
+        for (var i = 0; i < priceSpans.length; i++) {
+            sum += parseInt(priceSpans[i].innerHTML)
+        }
+        total.innerHTML = sum
+    }
+
+
+</script>
+
+</body>
+</html>
